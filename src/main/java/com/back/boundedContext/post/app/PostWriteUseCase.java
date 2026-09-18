@@ -10,13 +10,14 @@ import com.back.shared.post.dto.PostDto;
 import com.back.shared.post.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.back.shared.member.out.MemberApiClient;
 
 @Service
 @RequiredArgsConstructor
 public class PostWriteUseCase {
     private final PostRepository postRepository;
     private final EventPublisher eventPublisher;
-    private final MemberFacade memberFacade;
+    private final MemberApiClient memberApiClient;
 
     //public Post write(Member author, String title, String content) {
     public RsData<Post> write(Member author, String title, String content) {
@@ -27,7 +28,7 @@ public class PostWriteUseCase {
                         new PostDto(post)
                 )
         );
-        String randomSecureTip = memberFacade.getRandomSecureTip();
+        String randomSecureTip = memberApiClient.getRandomSecureTip();
 
         return new RsData<>(
                 "201-1",
