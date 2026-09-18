@@ -5,7 +5,7 @@ import com.back.boundedContext.member.out.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.back.global.rsData.RsData;
 import java.util.Optional;
 
 @Service
@@ -20,7 +20,7 @@ public class MemberFacade {
     }
 
     @Transactional
-    public Member join(String username, String password, String nickname) {
+    public RsData<Member> join(String username, String password, String nickname) {
         return memberJoinUseCase.join(username, password, nickname);
     }
 
