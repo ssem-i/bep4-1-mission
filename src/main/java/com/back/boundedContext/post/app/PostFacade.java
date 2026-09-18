@@ -24,12 +24,16 @@ public class PostFacade {
     public long count(){
         return postRepository.count();
     }
+
+    public RsData<Post> write(PostMember author, String title, String content) {
+        return postWriteUseCase.write(author, title, content);
+    }
+
     public Optional<Post> findById(int id){
         return postRepository.findById(id);
     }
-    public RsData<Post> write(Member author, String title, String content){
-        return postWriteUseCase.write(author, title, content);
-    }
+
+
     @Transactional
     public PostMember syncMember(MemberDto member) {
         PostMember _member = new PostMember(
@@ -41,7 +45,10 @@ public class PostFacade {
                 member.getNickname(),
                 member.getActivityScore()
         );
-
         return postMemberRepository.save(_member);
     }
+        @Transactional(readOnly = true)
+        public Optional<PostMember> findMemberByUsername(String username) {
+            return postMemberRepository.findByUsername(username);
+        }
 }
