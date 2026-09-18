@@ -1,12 +1,12 @@
 package com.back.boundedContext.member.domain;
 
 import com.back.global.jpa.entity.BaseIdAndTime;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Table(name = "MEMBER_MEMBER")
 @Entity
 @NoArgsConstructor
 public class Member extends BaseIdAndTime {
