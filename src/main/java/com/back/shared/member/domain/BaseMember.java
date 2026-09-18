@@ -24,5 +24,6 @@ public abstract class BaseMember extends BaseEntity {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
+        this.activityScore = activityScore;
     }
 }
