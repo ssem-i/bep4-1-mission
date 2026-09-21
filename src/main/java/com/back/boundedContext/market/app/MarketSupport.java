@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.back.boundedContext.market.out.CartRepository;
 import java.util.Optional;
+import com.back.boundedContext.market.domain.Order;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +37,9 @@ public class MarketSupport {
     }
     public long countOrders() {
         return orderRepository.count();
+    }
+
+    public Optional<Order> findOrderById(int id) {
+        return orderRepository.findById(id);
     }
 }
