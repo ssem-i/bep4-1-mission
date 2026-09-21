@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
+import com.back.shared.cash.dto.CashMemberDto;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class CashFacade {
     }
 
     @Transactional
-    public Wallet createWallet(CashMember holder) {
+    public Wallet createWallet(CashMemberDto holder) {
         return cashCreateWalletUseCase.createWallet(holder);
     }
 

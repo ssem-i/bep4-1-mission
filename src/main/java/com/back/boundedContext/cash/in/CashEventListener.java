@@ -11,6 +11,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
+import com.back.shared.cash.event.CashMemberCreatedEvent;
 
 @Component
 @RequiredArgsConstructor
@@ -20,13 +21,18 @@ public class CashEventListener {
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(MemberJoinedEvent event) {
-        CashMember member = cashFacade.syncMember(event.getMember());
-        cashFacade.createWallet(member);
+        cashFacade.syncMember(event.getMember());
     }
 
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(MemberModifiedEvent event) {
         cashFacade.syncMember(event.getMember());
+    }
+
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(CashMemberCreatedEvent event) {
+        cashFacade.createWallet(event.getMember());
     }
 }
