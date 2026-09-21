@@ -2,6 +2,7 @@ package com.back.boundedContext.market.app;
 
 import com.back.boundedContext.market.domain.MarketMember;
 import com.back.boundedContext.market.out.MarketMemberRepository;
+import com.back.boundedContext.market.out.OrderRepository;
 import com.back.global.eventPublisher.EventPublisher;
 import com.back.shared.market.dto.MarketMemberDto;
 import com.back.shared.market.event.MarketMemberCreatedEvent;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class MarketSyncMemberUseCase {
     private final MarketMemberRepository marketMemberRepository;
     private final EventPublisher eventPublisher;
+    private final OrderRepository orderRepository;
 
     public MarketMember syncMember(MemberDto member) {
         boolean isNew = !marketMemberRepository.existsById(member.getId());
@@ -39,5 +41,9 @@ public class MarketSyncMemberUseCase {
         }
 
         return _member;
+    }
+
+    public long countOrders() {
+        return orderRepository.count();
     }
 }
