@@ -11,6 +11,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import com.back.boundedContext.market.domain.OrderItem;
+import com.back.shared.market.dto.OrderItemDto;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/market/orders")
@@ -68,5 +72,17 @@ public class ApiV1OrderController {
         marketFacade.requestPayment(order, reqBody.amount());
 
         return new RsData<>("202-1", "결제 프로세스가 시작되었습니다.");
+    }
+
+    @GetMapping("/{id}/items")
+    @Transactional(readOnly = true)
+    public List<OrderItemDto> getItems(@PathVariable int id) {
+        return marketFacade
+                .findOrderById(id)
+                .get()
+                .getItems()
+                .stream()
+                .map(OrderItem::toDto)
+                .toList();
     }
 }
