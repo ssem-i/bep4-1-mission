@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.back.boundedContext.post.domain.Post;
 import java.util.List;
 
 @RestController
@@ -23,7 +23,7 @@ public class ApiV1PostController {
         return postFacade
                 .findByOrderByIdDesc()
                 .stream()
-                .map(PostDto::new)
+                .map(Post::toDto)
                 .toList();
     }
 
@@ -34,7 +34,7 @@ public class ApiV1PostController {
     ) {
         return postFacade
                 .findById(id)
-                .map(PostDto::new)
+                .map(Post::toDto)
                 .get();
     }
 }

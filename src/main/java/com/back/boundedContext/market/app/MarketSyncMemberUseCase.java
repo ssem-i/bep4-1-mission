@@ -2,20 +2,17 @@ package com.back.boundedContext.market.app;
 
 import com.back.boundedContext.market.domain.MarketMember;
 import com.back.boundedContext.market.out.MarketMemberRepository;
-import com.back.boundedContext.market.out.OrderRepository;
 import com.back.global.eventPublisher.EventPublisher;
-import com.back.shared.market.dto.MarketMemberDto;
 import com.back.shared.market.event.MarketMemberCreatedEvent;
-import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.back.shared.member.dto.MemberDto;
 
 @Service
 @RequiredArgsConstructor
 public class MarketSyncMemberUseCase {
     private final MarketMemberRepository marketMemberRepository;
     private final EventPublisher eventPublisher;
-    private final OrderRepository orderRepository;
 
     public MarketMember syncMember(MemberDto member) {
         boolean isNew = !marketMemberRepository.existsById(member.getId());
@@ -35,7 +32,7 @@ public class MarketSyncMemberUseCase {
         if (isNew) {
             eventPublisher.publish(
                     new MarketMemberCreatedEvent(
-                            new MarketMemberDto(_member)
+                            _member.toDto()
                     )
             );
         }
@@ -43,7 +40,5 @@ public class MarketSyncMemberUseCase {
         return _member;
     }
 
-    public long countOrders() {
-        return orderRepository.count();
-    }
+    // public long countOrders() { return orderRepository.count(); }
 }

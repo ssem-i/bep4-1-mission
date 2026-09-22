@@ -1,13 +1,10 @@
 package com.back.boundedContext.post.app;
 
-import com.back.boundedContext.member.app.MemberFacade;
-import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.domain.PostMember;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.eventPublisher.EventPublisher;
 import com.back.global.rsData.RsData;
-import com.back.shared.post.dto.PostDto;
 import com.back.shared.post.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +23,7 @@ public class PostWriteUseCase {
 
         eventPublisher.publish(
                 new PostCreatedEvent(
-                        new PostDto(post)
+                        post.toDto()
                 )
         );
         String randomSecureTip = memberApiClient.getRandomSecureTip();

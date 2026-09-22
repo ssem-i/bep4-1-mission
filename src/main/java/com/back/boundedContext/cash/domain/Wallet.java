@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.CascadeType.REMOVE;
+import com.back.shared.cash.dto.WalletDto;
 
 @Entity
 @Table(name = "CASH_WALLET")
@@ -27,6 +28,17 @@ public class Wallet extends BaseManualIdAndTime {
     public Wallet(CashMember holder) {
         super(holder.getId());
         this.holder = holder;
+    }
+
+    public WalletDto toDto() {
+        return new WalletDto(
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                holder.getId(),
+                holder.getUsername(),
+                balance
+        );
     }
 
     public boolean hasBalance() {

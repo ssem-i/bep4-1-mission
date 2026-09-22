@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.back.boundedContext.cash.domain.Wallet;
 
 @RestController
 @RequestMapping("/api/v1/cash/wallets")
@@ -22,7 +23,7 @@ public class ApiV1WalletController {
     ) {
         return cashFacade
                 .findWalletByHolderId(holderId)
-                .map(WalletDto::new)
+                .map(Wallet::toDto)
                 .get();
     }
 }
